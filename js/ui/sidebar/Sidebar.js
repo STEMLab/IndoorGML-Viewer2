@@ -22,7 +22,7 @@ define([
 
     var sceneTab = new UI.Text('SCENE').onClick(onClick);
     var projectTab = new UI.Text('PROJECT').onClick(onClick);
-    // var settingsTab = new UI.Text('SETTINGS').onClick(onClick);
+    var settingsTab = new UI.Text('SETTINGS').onClick(onClick);
 
     var tabs = new UI.Div();
     tabs.setId('tabs');
@@ -39,9 +39,9 @@ define([
 
 
     var scene = new UI.Span().add(
-			// new SidebarScene(editor),
-			new SidebarProperties(editor)
-      // new Sidebar.Animation(editor) //,
+			new SidebarScene(editor),
+			new SidebarProperties(editor),
+      new Sidebar.Animation(editor) //,
       //new Sidebar.Script( editor )
     );
     container.add(scene);
@@ -51,10 +51,10 @@ define([
     );
     // container.add( project );
 
-    // var settings = new UI.Span().add(
-    //   new Sidebar.Settings(editor),
-    //   new Sidebar.History(editor)
-    // );
+    var settings = new UI.Span().add(
+      new Sidebar.Settings(editor),
+      new Sidebar.History(editor)
+    );
     //container.add( settings );
 
     //
@@ -62,26 +62,26 @@ define([
     function select(section) {
 
       sceneTab.setClass('');
-      // projectTab.setClass('');
-      // settingsTab.setClass('');
+      projectTab.setClass('');
+      settingsTab.setClass('');
 
       scene.setDisplay('none');
-      // project.setDisplay('none');
-      // settings.setDisplay('none');
+      project.setDisplay('none');
+      settings.setDisplay('none');
 
       switch (section) {
         case 'SCENE':
           sceneTab.setClass('selected');
           scene.setDisplay('');
           break;
-        // case 'PROJECT':
-        //   projectTab.setClass('selected');
-        //   project.setDisplay('');
-        //   break;
-        // case 'SETTINGS':
-        //   settingsTab.setClass('selected');
-        //   settings.setDisplay('');
-        //   break;
+        case 'PROJECT':
+          projectTab.setClass('selected');
+          project.setDisplay('');
+          break;
+        case 'SETTINGS':
+          settingsTab.setClass('selected');
+          settings.setDisplay('');
+          break;
       }
 
     }
