@@ -4,6 +4,8 @@
 
 var Sidebar = function ( editor ) {
 
+	// var test = new Sidebar.View(editor);
+
 	var container = new UI.Panel();
 	container.setId( 'sidebar' );
 
@@ -29,8 +31,8 @@ var Sidebar = function ( editor ) {
 
 	var scene = new UI.Span().add(
 		new Sidebar.Scene( editor ),
-		new Sidebar.Properties( editor ),
-		new Sidebar.Animation( editor )//,
+		new Sidebar.Properties( editor )//,
+		// new Sidebar.Animation( editor )//,
 		//new Sidebar.Script( editor )
 	);
 	container.add( scene );
@@ -38,13 +40,13 @@ var Sidebar = function ( editor ) {
 	var project = new UI.Span().add(
 		new Sidebar.Project( editor )
 	);
-	//container.add( project );
+	// container.add( project );
 
 	var settings = new UI.Span().add(
 		new Sidebar.Settings( editor ),
 		new Sidebar.History( editor )
 	);
-	//container.add( settings );
+	// container.add( settings );
 
 	//
 

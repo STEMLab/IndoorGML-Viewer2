@@ -32,8 +32,8 @@ Sidebar.Properties = function ( editor ) {
 	container.add( object );
 
 	var view = new UI.Span().add(
-		// new Sidebar.View( editor )
-		new Sidebar.TreeView(editor)
+		new Sidebar.View( editor )
+		// new Sidebar.TreeView(editor)
 	);
 	container.add( view );
 	//var geometry = new UI.Span().add(
