@@ -9,14 +9,14 @@ require.config({
 
 require([
   "./Editor",
-  "./ui/menubar/Menubar",
-  "./Viewport",
-  "./ui/sidebar/Sidebar"
+  "./ui/menubar/Menubar"//,
+  // "./Viewport" ,
+  // "./ui/sidebar/Sidebar"
 ], function(
   Editor,
-  Menubar,
-  Viewport,
-  Sidebar
+  Menubar//,
+  // Viewport,
+  // Sidebar
 ) {
   'use strict';
 
@@ -25,6 +25,7 @@ require([
   };
 
 
+  // var editor = new Editor();
   var editor = new Editor();
 
   var viewport = new Viewport(editor);
