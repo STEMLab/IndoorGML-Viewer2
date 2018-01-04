@@ -27,13 +27,12 @@ Sidebar.Properties = function ( editor ) {
 
 
 	var object = new UI.Span().add(
-		new Sidebar.Object( editor )
+		// new Sidebar.Object( editor )
 	);
 	container.add( object );
 
 	var view = new UI.Span().add(
 		new Sidebar.View( editor )
-		// new Sidebar.TreeView(editor)
 	);
 	container.add( view );
 	//var geometry = new UI.Span().add(
@@ -67,10 +66,10 @@ Sidebar.Properties = function ( editor ) {
 				viewTab.setClass( 'selected' );
 				view.setDisplay( '' );
 				break;
-			case 'GEOMETRY':
-				geometryTab.setClass( 'selected' );
-				geometry.setDisplay( '' );
-				break;
+			// case 'GEOMETRY':
+			// 	geometryTab.setClass( 'selected' );
+			// 	geometry.setDisplay( '' );
+			// 	break;
 			case 'MATERIAL':
 				materialTab.setClass( 'selected' );
 				material.setDisplay( '' );

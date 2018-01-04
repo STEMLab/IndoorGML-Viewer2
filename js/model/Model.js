@@ -135,7 +135,7 @@ var CellSpace = function() {
 
 
 CellSpace.prototype.init = function(path, i, maxmin_xyz) {
-  console.log(path.getCellSpace(i));
+  // console.log(pattCellSpace(i));
   var cellpath = path.getCellSpace(i);
 
   this.cellid = cellpath.id;

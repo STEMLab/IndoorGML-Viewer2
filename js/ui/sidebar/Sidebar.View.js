@@ -1,7 +1,5 @@
 /**
  * @author mrdoob / http://mrdoob.com/
- * The content of this module is same with Sidebar.View.
- *  The name of "View" make some trouble so we chang name of module.
  */
 
 Sidebar.View = function(editor) {
