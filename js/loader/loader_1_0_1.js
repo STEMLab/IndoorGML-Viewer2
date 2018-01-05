@@ -17,7 +17,7 @@ define([
 
   loader_1_0_1.prototype.parseJsonObj = function() {
 
-    console.log(this.contents);
+    // console.log(this.contents);
 
     var inlineWorkerText = "self.addEventListener('message', function(e) { postMessage(e); } ,false);";
     var indoor = new Indoor("1.0.1");

@@ -135,10 +135,11 @@ var CellSpace = function() {
 
 
 CellSpace.prototype.init = function(path, i, maxmin_xyz) {
-  // console.log(path.getCellSpace(i));
+  // console.log(pattCellSpace(i));
   var cellpath = path.getCellSpace(i);
 
-  this.cellid = path.cellsid;
+  this.cellid = cellpath.id;
+
   var n = cellpath.name;
   if (typeof n !== 'undefined') {
     this.cellname = n[0].value;
