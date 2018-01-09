@@ -108,7 +108,7 @@ SetIndoorGMLCommand.prototype = {
         NetworkDictionary[graphs[i].graphid] = graph;
 
     }
-    //console.log(CellDictionary);
+    // console.log(CellDictionary);
 	},
 
 	createObject : function(indoor) {
@@ -129,21 +129,29 @@ SetIndoorGMLCommand.prototype = {
         cellgroup.name = key;
         var cell = CellDictionary[key];
 
+				// console.log(cellgroup);
 
         var geometry = new THREE.BufferGeometry();
         var vertices = new Float32Array( cell );
 
 
         geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ) );
-        var material = new THREE.MeshStandardMaterial( { color: 0xffff00, opacity:0.3, transparent : true, side: THREE.DoubleSide} );
+        var material = new THREE.MeshStandardMaterial( {  opacity : 0.99, transparent : true, side: THREE.DoubleSide} );
+				// var material = new THREE.MeshStandardMaterial( { side: THREE.DoubleSide} );
         var mesh = new THREE.Mesh( geometry, material );
+
+				// material.depthTest = false;
+				material.emissive.setHex(0x000000);
+				// material.deptWrite = false;
+				// mesh.renderOrder = 0;
+				// console.log(geometry, material);
 
         cellgroup.add(mesh);
 
         var surfaces = cells[i].geometry;
         for(var j = 0; j < surfaces.length; j++){
             var polygon = surfaces[j].exterior;
-            var material = new THREE.LineBasicMaterial( {color: 0x0000ff} );
+            var material = new THREE.LineBasicMaterial( {color: 0x0000ff, opacity : 0.99, transparent : true}  );
 
             var geometry = new THREE.Geometry();
             for(var k = 0; k < polygon.length; k += 3){
@@ -162,6 +170,7 @@ SetIndoorGMLCommand.prototype = {
                 cellgroup.add(line);
             }
         }
+
         cellSpace.add(cellgroup);
         AllGeometry[key] = cellgroup;
         Information[cells[i].cellid] = cells[i];
@@ -179,6 +188,8 @@ SetIndoorGMLCommand.prototype = {
       geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ) );
       var material = new THREE.MeshBasicMaterial( { color: 0x00ffff, opacity:0.3, transparent : true, side: THREE.DoubleSide} );
       var mesh = new THREE.Mesh( geometry, material );
+			// mesh.material.depthTest = false;
+			// mesh.renderOrder = 1;
       cellSpaceBoundaryMember.add( mesh );
       AllGeometry[key] = cellSpaceBoundaryMember;
       cellSpaceBoundary.add( cellSpaceBoundaryMember );
@@ -238,7 +249,7 @@ SetIndoorGMLCommand.prototype = {
       MultiLayeredGraph.add(spaceLayers);
     }
     group.add(MultiLayeredGraph);
-    console.log(group);
+    // console.log(group);
 
 		return group;
 	},
