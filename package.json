@@ -1,0 +1,30 @@
+{
+  "name": "indoorgmlviewer2",
+  "version": "1.0.0",
+  "description": "IndoorGML Viewer version 2 - under construction",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEMLab/IndoorGMLViewer2.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/STEMLab/IndoorGMLViewer2/issues"
+  },
+  "homepage": "https://github.com/STEMLab/IndoorGMLViewer2#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-fileupload": "^0.3.0",
+    "jsonix": "^2.4.1",
+    "ogc-schemas": "^2.6.1",
+    "w3c-schemas": "^1.4.0"
+  }
+}
