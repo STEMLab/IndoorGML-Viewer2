@@ -9,12 +9,12 @@ require.config({
 
 require([
   "./Editor",
-  "./ui/menubar/Menubar"//,
+  "./ui/menubar/Menubar" //,
   // "./Viewport" ,
   // "./ui/sidebar/Sidebar"
 ], function(
   Editor,
-  Menubar//,
+  Menubar //,
   // Viewport,
   // Sidebar
 ) {
@@ -39,5 +39,13 @@ require([
 
   var modal = new UI.Modal();
   document.body.appendChild(modal.dom);
+
+  /* Windows Resize */
+  function onWindowResize(event) {
+    editor.signals.windowResize.dispatch();
+  }
+  window.addEventListener('resize', onWindowResize, false);
+
+  onWindowResize();
 
 });
