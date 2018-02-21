@@ -39,89 +39,88 @@ var Viewport = function(editor) {
   var objectRotationOnDown = null;
   var objectScaleOnDown = null;
 
-
   /*
-  	var transformControls = new THREE.TransformControls( camera, container.dom );
-  	transformControls.addEventListener( 'change', function () {
+	var transformControls = new THREE.TransformControls( camera, container.dom );
+	transformControls.addEventListener( 'change', function () {
 
-  		var object = transformControls.object;
+		var object = transformControls.object;
 
-  		if ( object !== undefined ) {
+		if ( object !== undefined ) {
 
-  			selectionBox.update( object );
+			selectionBox.update( object );
 
-  			if ( editor.helpers[ object.id ] !== undefined ) {
+			if ( editor.helpers[ object.id ] !== undefined ) {
 
-  				editor.helpers[ object.id ].update();
+				editor.helpers[ object.id ].update();
 
-  			}
+			}
 
-  			signals.refreshSidebarObject3D.dispatch( object );
+			signals.refreshSidebarObject3D.dispatch( object );
 
-  		}
+		}
 
-  		render();
+		render();
 
-  	} );
-  	transformControls.addEventListener( 'mouseDown', function () {
+	} );
+	transformControls.addEventListener( 'mouseDown', function () {
 
-  		var object = transformControls.object;
+		var object = transformControls.object;
 
-  		objectPositionOnDown = object.position.clone();
-  		objectRotationOnDown = object.rotation.clone();
-  		objectScaleOnDown = object.scale.clone();
+		objectPositionOnDown = object.position.clone();
+		objectRotationOnDown = object.rotation.clone();
+		objectScaleOnDown = object.scale.clone();
 
-  		controls.enabled = false;
+		controls.enabled = false;
 
-  	} );
-  	transformControls.addEventListener( 'mouseUp', function () {
+	} );
+	transformControls.addEventListener( 'mouseUp', function () {
 
-  		var object = transformControls.object;
+		var object = transformControls.object;
 
-  		if ( object !== null ) {
+		if ( object !== null ) {
 
-  			switch ( transformControls.getMode() ) {
+			switch ( transformControls.getMode() ) {
 
-  				case 'translate':
+				case 'translate':
 
-  					if ( ! objectPositionOnDown.equals( object.position ) ) {
+					if ( ! objectPositionOnDown.equals( object.position ) ) {
 
-  						editor.execute( new SetPositionCommand( object, object.position, objectPositionOnDown ) );
+						editor.execute( new SetPositionCommand( object, object.position, objectPositionOnDown ) );
 
-  					}
+					}
 
-  					break;
+					break;
 
-  				case 'rotate':
+				case 'rotate':
 
-  					if ( ! objectRotationOnDown.equals( object.rotation ) ) {
+					if ( ! objectRotationOnDown.equals( object.rotation ) ) {
 
-  						editor.execute( new SetRotationCommand( object, object.rotation, objectRotationOnDown ) );
+						editor.execute( new SetRotationCommand( object, object.rotation, objectRotationOnDown ) );
 
-  					}
+					}
 
-  					break;
+					break;
 
-  				case 'scale':
+				case 'scale':
 
-  					if ( ! objectScaleOnDown.equals( object.scale ) ) {
+					if ( ! objectScaleOnDown.equals( object.scale ) ) {
 
-  						editor.execute( new SetScaleCommand( object, object.scale, objectScaleOnDown ) );
+						editor.execute( new SetScaleCommand( object, object.scale, objectScaleOnDown ) );
 
-  					}
+					}
 
-  					break;
+					break;
 
-  			}
+			}
 
-  		}
+		}
 
-  		controls.enabled = true;
+		controls.enabled = true;
 
-  	} );
+	} );
 
-  	sceneHelpers.add( transformControls );
-    */
+	sceneHelpers.add( transformControls );
+  */
   // fog
 
   var oldFogType = "None";
@@ -371,192 +370,50 @@ var Viewport = function(editor) {
   });
 
   var oldHighlightObj = null;
-  var highlightColor = 0xffff00;
-  var highlightOpacity = 0.99;
-  var unHighlightCellColor = 0x000000;
-  var unHighlightCellBoundaryColor = 0x00ffff;
-  var unHighlightCellNodeColor = 0xffffff;
-  var unHighlightEdgeColor = 0x00ffff;
-  var unHighlightOpacity = 0.3;
 
-
-  /**
-   * change color of selected object
-   */
-  function highlightObj(objKey) {
-
-    coloringObj(objKey, highlightColor);
-
-  }
-
-  function unHighlightOldObj() {
-
-    if (oldHighlightObj == null) return;
-
-    var type = AllGeometry[oldHighlightObj].parent.name;
-
-    if (type == "CellSpace") {
-
-      coloringObj(oldHighlightObj, unHighlightCellColor);
-
-    } else if (type == "CellSpaceBoundary") {
-
-      coloringObj(oldHighlightObj, unHighlightCellBoundaryColor);
-
-    } else if (type == "nodes") {
-
-      coloringObj(oldHighlightObj, unHighlightCellNodeColor);
-
-    } else if (type == "edges") {
-
-      coloringObj(oldHighlightObj, unHighlightEdgeColor);
-
+  function coloringObj(obj, r, g, b) {
+    for (var i in obj.children) {
+      // console.log(i, object.children[i]);
+      obj.children[i].material.color.setRGB(r, g, b);
     }
-
   }
-
-  function coloringObj(objName, color) {
-    var obj = AllGeometry[objName];
-
-    obj.renderOrder = 999;
-
-    obj.onBeforeRender = () => {
-      renderer.clearDepth();
-    };
-
-    if (obj.parent.name == "CellSpace") {
-
-      for (var i in obj.children) {
-
-        if (obj.children[i].type == "Mesh") {
-          obj.children[i].material.emissive.setHex(color);
-          // obj.children[i].material.depthTest = false;
-          // obj.children[i].material.depthWrite = false;
-        }
-
-      }
-
-    } else if (obj.parent.name == "CellSpaceBoundary") {
-
-      console.log(obj);
-
-      for (var i in obj.children) {
-
-        if (obj.children[i].type == "Mesh"){
-
-          obj.children[i].material.color.setHex(color);
-        }
-
-      }
-
-    } else if (obj.parent.name == "nodes") {
-
-      obj.children[0].material.color.setHex(color);
-
-    } else if (obj.parent.name == "edges") {
-
-      obj.children[0].material.color.setHex(color);
-
-    }
-
-  }
-
-
-
-  function changeOpacity(objKey) {
-
-    // console.log(objKey);
-
-    /**
-     * give transparency to unhighligted object
-     */
-    for (var i in AllGeometry) {
-
-      var obj = AllGeometry[i];
-
-      if (obj.parent.name == "CellSpace" || obj.parent.name == "CellSpace") {
-
-        for (var j in obj.children) {
-
-          obj.children[j].material.opacity = 0.3;
-
-          if (obj.children[j].type == "Line")
-            obj.children[j].material.transparent = true;
-
-        }
-
-      } else if (obj.parent.name == "nodes") {
-
-        obj.children[0].material.opacity = 0;
-        obj.children[0].material.transparent = true;
-
-      } else if (obj.parent.name == "edges") {
-
-        obj.children[0].material.opacity = 0.3;
-        obj.children[0].material.transparent = true;
-
-      }
-    }
-
-    /**
-     * remove transparency of unhighligted object
-     */
-    var obj = AllGeometry[objKey];
-
-    if (obj.parent.name == "CellSpace" || obj.parent.name == "CellSpace") {
-
-      for (var j in obj.children) {
-
-        obj.children[j].material.opacity = 1;
-
-        if (obj.children[j].type == "Line")
-          obj.children[j].material.transparent = false;
-
-      }
-
-    } else if (obj.parent.name == "nodes") {
-
-      obj.children[0].material.opacity = 1;
-
-    } else if (obj.parent.name == "edges") {
-
-      obj.children[0].material.opacity = 1;
-      obj.children[0].material.transparent = false;
-
-    }
-
-  }
-
 
   signals.objectSelected.add(function(object) {
 
-    if (object != null) {
-      if (object.name == oldHighlightObj) {
+    // console.log("objectSelected called", object);
 
-        unHighlightAll();
-        oldHighlightObj = null;
+    if (object.parent.name == "CellSpace") {
 
-      } else if (object.parent.name == "CellSpace" ||
-        object.parent.name == "CellSpaceBoundary" ||
-        object.parent.name == "nodes" ||
-        object.parent.name == "edges") {
+      // highlight new obj
+			coloringObj(object, 255, 255, 0);
 
-        highlightObj(object.name);
-        unHighlightOldObj();
-        changeOpacity(object.name);
-        oldHighlightObj = object.name;
-
-        camera.lookAt(object.children[0].geometry.boundingSphere.center);
-        camera.fov = 1;
-        camera.updateProjectionMatrix();
-
-        console.log(object);
+      // unhighlight old highlight obj
+      if (oldHighlightObj != null) {
+        var oldObj = editor.scene.getObjectById(oldHighlightObj);
+				coloringObj(oldObj, 0, 0, 255);
       }
-    } else {
 
-      oldHighlightObj = null;
+      oldHighlightObj = object.id;
 
+    } else if (object.parent.name == "CellSpaceBoundary") {
+      for (var i in object.children) {
+        // console.log(i, object.children[i]);
+        object.children[i].material.color.setRGB(255, 255, 0);
+      }
+    } else if (object.parent.name == "nodes") {
+      console.log(object);
+      for (var i in object.children) {
+        console.log(i, object.children[i]);
+        object.children[i].material.color.setRGB(255, 0, 0);
+      }
+    } else if (object.parent.name == "edges") {
+      console.log(object);
+      for (var i in object.children) {
+        console.log(i, object.children[i]);
+        object.children[i].material.color.setRGB(255, 0, 0);
+      }
     }
+
 
     // selectionBox.visible = false;
     // //transformControls.detach();
@@ -784,13 +641,11 @@ var Viewport = function(editor) {
 
   }
 
-
   function render() {
 
     sceneHelpers.updateMatrixWorld();
     scene.updateMatrixWorld();
 
-    renderer.autoclear = false;
     renderer.clear();
     renderer.render(scene, camera);
 
